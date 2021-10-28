@@ -21,11 +21,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
             window = UIWindow(frame: windowScene.coordinateSpace.bounds)
             window?.windowScene = windowScene
-            var navVC = UINavigationController()
+            var navVC = UITabBarController()
             let mainVC = MainViewController(nibName: nil, bundle: nil)
             let settingsVC = SettingsViewController(nibName: nil, bundle: nil)
-        
-            navVC.viewControllers = [mainVC]
+            mainVC.tabBarItem.image = UIImage(systemName: "play")
+            settingsVC.tabBarItem.image = UIImage(systemName: "gear")
+
+            navVC.viewControllers = [mainVC, settingsVC]
             window?.rootViewController = navVC
 //            window?.rootViewController = MainViewController()
             window?.makeKeyAndVisible()

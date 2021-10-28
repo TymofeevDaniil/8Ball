@@ -7,47 +7,65 @@
 
 import UIKit
 import SnapKit
-//import Foundation
+import Foundation
+import Alamofire
+
 
 class MainViewController: UIViewController {
     
-    var setButton = UIButton()
-    var answerLabel = UILabel()
+//    override func becomeFirstResponder() -> Bool {
+//        true
+//    }
+    override var canBecomeFirstResponder: Bool { return true}
+    private let answerLabel = UILabel()
+    private var theText = "Sample Text"
+    
+//    var model: MainModel
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
-        createUI()
-
+        self.becomeFirstResponder()
+        view.backgroundColor = .white
+        setViews()
     }
     
-    func createUI() {
+    
+    private func setViews() {
         view.addSubview(answerLabel)
+        answerLabel.translatesAutoresizingMaskIntoConstraints = false
         answerLabel.font = .systemFont(ofSize: 30)
         answerLabel.backgroundColor = .white
-        answerLabel.text = "Sample Text"
+        answerLabel.text = theText
         answerLabel.snp.makeConstraints{ (make) -> Void in
             make.center.equalTo(view)
         }
+    }
+    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
 
-        view.addSubview(setButton)
-        setButton.isUserInteractionEnabled = true
-        setButton.backgroundColor = .white
-        setButton.setImage(UIImage(systemName: "gear"), for: .normal)
-        setButton.setTitleColor(.black, for: .normal)
-        setButton.accessibilityActivationPoint = setButton.center
-        setButton.snp.makeConstraints{ (make) -> Void in
-//            make.centerY.equalTo(view.frame.minY + 70)
-//            make.centerX.equalTo(view.frame.maxX - 50)
-            make.width.equalTo(100)
-            make.height.equalTo(100)
+        let request = AF.request("https://8ball.delegator.com/magic/JSON/8BallTask")
+        request.responseJSON { (data) in
+            
+            guard let dataOK = data.value,
+                  let newData = dataOK as? NSDictionary,
+                  let magic = newData["magic"] as? NSDictionary,
+                  let answer = magic["answer"] as? String
+            else { return }
+            self.theText = answer
+            print(answer)
+
+        }
+
+    }
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?){
+        if motion == .motionShake {
+            self.answerLabel.text = theText
+            view.layoutSubviews()
+        } else {
             
         }
-        setButton.addTarget(self, action: #selector(goToSettings(sender:)), for: .touchUpInside)
     }
-    
-    @objc func goToSettings(sender: UIButton!) {
-        show(SettingsViewController(), sender: self)
-    }
+//    override func motionCancelled(_ motion: UIEvent.EventSubtype, with event: UIEvent?){
+//
+//    }
 
 }
