@@ -11,46 +11,31 @@ import SnapKit
 class SettingsViewController: UIViewController {
     
     private let answersTable = UITableView()
-    private var searchTextField = UITextField()
-    private let addTextButton = UIButton()
-    let abc = ["a", "b", "c"]
+    let cell = CustomCell()
+    let abc = ["Worth a try", "I think not", "Better to rethink", "Of course", "Worth an effort"]
+    var cba = [true, true, true, true, true]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .white
         setViews()
-
     }
     
     private func setViews() {
-//        view.addSubview(answersTable)
-//        answersTable.backgroundView?.backgroundColor = .yellow
-//        answersTable.snp.makeConstraints{ (make) -> Void in
-//            answersTable.translatesAutoresizingMaskIntoConstraints = false
-//            make.bottom.equalTo(view.snp_bottomMargin)
-//            make.right.equalTo(view.snp_rightMargin)
-//            make.left.equalTo(view.snp_leftMargin)
-//            make.top.equalTo(view.snp_centerYWithinMargins)
-//            make.bottom = view.bottomAnchor
-//            answersTable.leftAnchor = view.leftAnchor
-//            answersTable.rightAnchor = view.rightAnchor
-//            answersTable.topAnchor = view.centerYAnchor
-//        }
-        view.addSubview(searchTextField)
-        searchTextField.translatesAutoresizingMaskIntoConstraints = false
-        searchTextField = UITextField.init(frame: CGRect(x: 50, y: 70, width: 300, height: 20))
-        searchTextField.placeholder = "dasdas"
-        searchTextField.snp.makeConstraints{ (make) -> Void in
-            make.width.equalTo(200)
-            make.height.equalTo(12)
-        }
-        print(searchTextField.frame)
-//        translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(addTextButton)
-//        translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(answersTable)
+        answersTable.snp.makeConstraints{ make in
+            make.centerX.equalTo(view)
+            make.centerY.equalTo(view.center.y)
+            make.height.equalTo(view).dividedBy(2)
+            make.width.equalTo(view)
+        }
+        answersTable.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        answersTable.dataSource = self
+        answersTable.delegate = self
+
     }
- 
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -58,9 +43,26 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         abc.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = answersTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        if cell.accessoryType == .checkmark {
+            cell.accessoryType = .none
+            cba[indexPath.row] = !cba[indexPath.row]
+        } else {
+            cell.accessoryType = .checkmark
+            cba[indexPath.row] = !cba[indexPath.row]
+        }
+        tableView.cellForRow(at: indexPath)?.isSelected = false
+        tableView.reloadData()
+        print(cba)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = answersTable.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
+        cell.editingAccessoryType = .checkmark
+        if cba[indexPath.row] { cell.accessoryType = .checkmark } else { cell.accessoryType = .none }
+        cell.textLabel!.text = abc[indexPath.row]
+        cell.textLabel?.textAlignment = .center
         return cell
     }
     

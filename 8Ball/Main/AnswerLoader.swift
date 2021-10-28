@@ -11,36 +11,23 @@ import Foundation
 
 class AnswerLoader {
     
-    var answer: String
+    private var answer: String?
     
-    required init?(data: NSDictionary) {
-        guard let magicContainer = data["magic"] as? NSDictionary,
-              let answer = magicContainer["answer"] as? String
-        else {
-            return nil
+    func loadAnswer() -> String? {
+        let request = AF.request("https://8ball.delegator.com/magic/JSON/8BallTask")
+        request.responseJSON { data in
+            
+            guard let dataOK = data.value,
+                  let newData = dataOK as? NSDictionary,
+                  let magic = newData["magic"] as? NSDictionary,
+                  let answer = magic["answer"] as? String
+            else { return }
+            DispatchQueue.main.async { [weak self] in
+                self?.answer = answer
+            }
+            print("==loader this== \(answer)")
         }
-        self.answer = answer
+        return (answer != nil) ? answer : nil
     }
     
-//    func loadAnswer(completion: @escaping (AnswerLoader) -> Void){
-//        AF.request("https://8ball.delegator.com/magic/JSON/8BallTask").responseJSON { jsonData in
-//            if let data = jsonData.result,
-//               let jsonDic = data as? NSDictionary{
-//                guard let answer = AnswerLoader(data: jsonDic) else {
-//                    print("WEATHER ERROR"); return
-//                }
-//                DispatchQueue.main.async { completion(answer) }
-//                }
-//            }
-//        }
-//        AF.request("https://8ball.delegator.com/magic/JSON/8BallTask").responseJSON { jsonData in
-//                if let data = jsonData.result.value,
-//                   let jsonDic = data as? NSDictionary{
-//                    guard let weatherData = WeatherData(data: jsonDic) else {
-//                        print("WEATHER ERROR"); return
-//                    }
-//                    DispatchQueue.main.async { completion(weatherData) }
-//                    }
-//                }
-//        }
 }
