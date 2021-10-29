@@ -16,6 +16,7 @@ class MainViewController: UIViewController {
     override var canBecomeFirstResponder: Bool { return true }
     private let answerLoader = AnswerLoader()
     private let answerLabel = UILabel()
+    let settingsModel = SettingsModel()
     private var theText = "Shake for a wish"
     
 //    var model: MainModel
@@ -23,13 +24,14 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        settingsModel.checkedAnswers = Persistance.shared.load()
         self.becomeFirstResponder()
         view.backgroundColor = .white
         setViews()
     }
     override func viewDidAppear(_ animated: Bool) {
-        let list = SettingsViewController().cba
-        print(list)
+        settingsModel.checkedAnswers = Persistance.shared.load()
+        print(settingsModel.checkedAnswers)
     }
     
     private func setViews() {
@@ -45,13 +47,29 @@ class MainViewController: UIViewController {
     }
     
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        let request = AF.request("https://8ball.delegator.com/magic/JSON/8BallTask")
-        request.responseJSON { data in
+        let request = AF.request("https://8ball.delegator.com/magic/JSON88/8BallTask")
+        request.responseJSON { [unowned self] data in
             guard let dataOK = data.value,
                   let newData = dataOK as? NSDictionary,
                   let magic = newData["magic"] as? NSDictionary,
                   let answer = magic["answer"] as? String
-            else { return }
+            else {
+                if !settingsModel.checkedAnswers.contains(true) { return }
+                var hcAnswers: [String] = []
+                for i in 0..<self.settingsModel.savedAnswers.count {
+                    if self.settingsModel.checkedAnswers[i] {
+                        hcAnswers.append(settingsModel.savedAnswers[i])
+                    }
+                }
+                print(hcAnswers)
+                theText = hcAnswers.randomElement()!
+                DispatchQueue.main.async { [weak self] in
+                    self?.theText = hcAnswers.randomElement()!
+                    self?.answerLabel.text = theText
+                    self?.view.layoutSubviews()
+                }
+                return
+            }
             
             DispatchQueue.main.async { [weak self] in
                 self?.theText = answer

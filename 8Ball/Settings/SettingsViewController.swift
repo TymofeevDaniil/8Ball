@@ -11,13 +11,14 @@ import SnapKit
 class SettingsViewController: UIViewController {
     
     private let answersTable = UITableView()
+    private let settingsModel = SettingsModel()
     let cell = CustomCell()
     let abc = ["Worth a try", "I think not", "Better to rethink", "Of course", "Worth an effort"]
     var cba = [true, true, true, true, true]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        settingsModel.checkedAnswers = Persistance.shared.load()
         view.backgroundColor = .white
         setViews()
     }
@@ -40,28 +41,30 @@ class SettingsViewController: UIViewController {
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        abc.count
+        settingsModel.savedAnswers.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if cell.accessoryType == .checkmark {
             cell.accessoryType = .none
-            cba[indexPath.row] = !cba[indexPath.row]
+            settingsModel.checkedAnswers[indexPath.row] = !settingsModel.checkedAnswers[indexPath.row]
         } else {
             cell.accessoryType = .checkmark
-            cba[indexPath.row] = !cba[indexPath.row]
+            settingsModel.checkedAnswers[indexPath.row] = !settingsModel.checkedAnswers[indexPath.row]
         }
+        Persistance.shared.save(newCheckList: settingsModel.checkedAnswers)
         tableView.cellForRow(at: indexPath)?.isSelected = false
         tableView.reloadData()
-        print(cba)
+        print(settingsModel.checkedAnswers)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = answersTable.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
         cell.editingAccessoryType = .checkmark
-        if cba[indexPath.row] { cell.accessoryType = .checkmark } else { cell.accessoryType = .none }
-        cell.textLabel!.text = abc[indexPath.row]
+        settingsModel.checkedAnswers = Persistance.shared.load()
+        if settingsModel.checkedAnswers[indexPath.row] { cell.accessoryType = .checkmark } else { cell.accessoryType = .none }
+        cell.textLabel!.text = settingsModel.savedAnswers[indexPath.row]
         cell.textLabel?.textAlignment = .center
         return cell
     }
