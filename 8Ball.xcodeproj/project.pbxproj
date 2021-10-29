@@ -19,7 +19,6 @@
 		B7EB281C27298F23004473E5 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EB281B27298F23004473E5 /* SettingsViewModel.swift */; };
 		B7EB281E27298F38004473E5 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EB281D27298F38004473E5 /* SettingsModel.swift */; };
 		B7EB28A0272AEC6F004473E5 /* AnswerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EB289F272AEC6F004473E5 /* AnswerLoader.swift */; };
-		B7EB28A2272B4EBE004473E5 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EB28A1272B4EBE004473E5 /* CustomTableViewCell.swift */; };
 		B7EB28A5272BE063004473E5 /* CheckedAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EB28A4272BE063004473E5 /* CheckedAnswers.swift */; };
 		B7EB28A7272BE0D6004473E5 /* CheckedAnswerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EB28A6272BE0D6004473E5 /* CheckedAnswerModel.swift */; };
 /* End PBXBuildFile section */
@@ -40,7 +39,6 @@
 		B7EB281B27298F23004473E5 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		B7EB281D27298F38004473E5 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		B7EB289F272AEC6F004473E5 /* AnswerLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerLoader.swift; sourceTree = "<group>"; };
-		B7EB28A1272B4EBE004473E5 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		B7EB28A4272BE063004473E5 /* CheckedAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckedAnswers.swift; sourceTree = "<group>"; };
 		B7EB28A6272BE0D6004473E5 /* CheckedAnswerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckedAnswerModel.swift; sourceTree = "<group>"; };
 		D2DC1181E2E66BC2CAA52C90 /* Pods-8Ball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-8Ball.debug.xcconfig"; path = "Target Support Files/Pods-8Ball/Pods-8Ball.debug.xcconfig"; sourceTree = "<group>"; };
@@ -116,7 +114,6 @@
 				B7EB281927298F14004473E5 /* SettingsViewController.swift */,
 				B7EB281B27298F23004473E5 /* SettingsViewModel.swift */,
 				B7EB281D27298F38004473E5 /* SettingsModel.swift */,
-				B7EB28A1272B4EBE004473E5 /* CustomTableViewCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -260,7 +257,6 @@
 				B7EB281827298EF0004473E5 /* MainModel.swift in Sources */,
 				B70051882729761600FC8998 /* AppDelegate.swift in Sources */,
 				B7EB28A0272AEC6F004473E5 /* AnswerLoader.swift in Sources */,
-				B7EB28A2272B4EBE004473E5 /* CustomTableViewCell.swift in Sources */,
 				B700518A2729761600FC8998 /* SceneDelegate.swift in Sources */,
 				B7EB281427298EA3004473E5 /* MainViewController.swift in Sources */,
 				B7EB28A5272BE063004473E5 /* CheckedAnswers.swift in Sources */,

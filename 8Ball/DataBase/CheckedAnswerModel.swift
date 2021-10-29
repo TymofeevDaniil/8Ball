@@ -9,10 +9,10 @@ import Foundation
 import RealmSwift
 
 class Persistance{
+    
     static let shared = Persistance()
     private let realm = try! Realm()
     
-//MARK: - Gift managment
     func load() -> ([Bool]){
         var checkedList = [Bool]()
         let savedList = realm.objects(CheckedAnswers.self)

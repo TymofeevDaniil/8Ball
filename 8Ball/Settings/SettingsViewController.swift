@@ -12,9 +12,6 @@ class SettingsViewController: UIViewController {
     
     private let answersTable = UITableView()
     private let settingsModel = SettingsModel()
-    let cell = CustomCell()
-    let abc = ["Worth a try", "I think not", "Better to rethink", "Of course", "Worth an effort"]
-    var cba = [true, true, true, true, true]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +21,6 @@ class SettingsViewController: UIViewController {
     }
     
     private func setViews() {
-        
         view.addSubview(answersTable)
         answersTable.snp.makeConstraints{ make in
             make.centerX.equalTo(view)
@@ -35,8 +31,8 @@ class SettingsViewController: UIViewController {
         answersTable.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         answersTable.dataSource = self
         answersTable.delegate = self
-
     }
+    
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -45,7 +41,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "MyCell")
         if cell.accessoryType == .checkmark {
             cell.accessoryType = .none
             settingsModel.checkedAnswers[indexPath.row] = !settingsModel.checkedAnswers[indexPath.row]
@@ -68,6 +64,5 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.textAlignment = .center
         return cell
     }
-    
     
 }

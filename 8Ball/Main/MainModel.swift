@@ -6,18 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
 
 class MainModel {
     
-    var answer: String
+    var url = URLType.correct
     
-    required init?(data: NSDictionary) {
-        guard let magicContainer = data["magic"] as? NSDictionary,
-              let name = magicContainer["answer"] as? String
-        else {
-            return nil
-        }
-        answer = name
+    enum URLType: String {
+        case correct = "https://8ball.delegator.com/magic/JSON/8BallTask"
+        case wrong = "https://8ball.delegator.com/magic/JSON8BallTask/"
     }
     
 }

@@ -9,5 +9,7 @@ import Foundation
 import RealmSwift
 
 class CheckedAnswers: Object{
+    
     @objc dynamic var checked = Bool()
+    
 }
